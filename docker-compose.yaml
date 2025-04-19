@@ -1,0 +1,12 @@
+# C:\Working\docker-compose.yml
+version: "3.9"
+
+services:
+  codex:
+    build: .
+    volumes:
+      - C:\Working:/usr/src/app    # Mount your Windows folder
+    working_dir: /usr/src/app
+    env_file:
+      - .env                       # Load OPENAI_API_KEY from .env
+    tty: true                      # Keep the shell open for interaction

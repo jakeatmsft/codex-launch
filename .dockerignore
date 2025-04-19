@@ -1,0 +1,6 @@
+# C:\Working\.dockerignore
+
+# Don’t send these to Docker build context
+.env
+.git
+node_modules

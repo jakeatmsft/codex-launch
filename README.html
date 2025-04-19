@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI Codex CLI Docker Setup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        pre {
+            background: #1e1e1e;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            overflow-x: auto;
+            color: #dcdcdc;
+        }
+        code {
+            font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+            background: none;
+            color: #dcdcdc;
+        }
+        h1, h2, h3 {
+            color: #ffffff;
+        }
+        blockquote {
+            margin: 10px 0;
+            padding: 10px;
+            background: #2a2a2a;
+            border-left: 5px solid #555;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .copy-btn:hover {
+            background: #0056b3;
+        }
+        .hljs {
+            background: none;
+            color: #dcdcdc;
+        }
+        .hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-section, .hljs-link {
+            color: #569cd6;
+        }
+        .hljs-string, .hljs-title, .hljs-name, .hljs-type, .hljs-attribute, .hljs-symbol, .hljs-bullet {
+            color: #d69d85;
+        }
+        .hljs-comment {
+            color: #6a9955;
+        }
+        .code-block {
+            position: relative;
+            margin-bottom: 1.5em;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("pre code").forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        });
+
+        function copyToClipboard(button, codeId) {
+            const code = document.getElementById(codeId).innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                button.innerText = "Copied!";
+                setTimeout(() => (button.innerText = "Copy"), 2000);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>OpenAI Codex CLI Docker Setup</h1>
+    <p>This repository demonstrates how to run the OpenAI Codex CLI inside a Docker container with your local Windows folder mounted for development. It uses an <code>.env</code> file to securely provide your API key and includes <code>.gitignore</code> and <code>.dockerignore</code> to keep secrets and unnecessary files out of version control.</p>
+
+    <h2>Project Structure</h2>
+    <div class="code-block">
+        <pre id="code1"><code class="plaintext">C:\Working
+├── Dockerfile
+├── docker-compose.yml
+├── .env
+├── .gitignore
+└── .dockerignore
+        </code></pre>
+        <button class="copy-btn" onclick="copyToClipboard(this, 'code1')">Copy</button>
+    </div>
+
+    <h2>1. Prerequisites</h2>
+    <ul>
+        <li><a href="https://www.docker.com/products/docker-desktop" target="_blank">Docker Desktop</a> installed and running on Windows</li>
+        <li>A valid OpenAI API key</li>
+    </ul>
+
+    <h2>2. Create the <code>.env</code> file</h2>
+    <p>In <code>C:\Working\.env</code>, add:</p>
+    <div class="code-block">
+        <pre id="code2"><code class="env">OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        </code></pre>
+        <button class="copy-btn" onclick="copyToClipboard(this, 'code2')">Copy</button>
+    </div>
+
+    <blockquote>
+        <strong>Note:</strong>
+        <ul>
+            <li>Never commit the <code>.env</code> file to Git.</li>
+            <li>Rotate or revoke your key by updating this file.</li>
+        </ul>
+    </blockquote>
+
+    <h2>3. Add Git and Docker ignores</h2>
+    <h3><code>.gitignore</code></h3>
+    <div class="code-block">
+        <pre id="code3"><code class="plaintext"># Ignore Node modules
+node_modules/
+
+# Ignore environment files
+.env
+
+# Ignore Docker Compose overrides
+docker-compose.override.yml
+        </code></pre>
+        <button class="copy-btn" onclick="copyToClipboard(this, 'code3')">Copy</button>
+    </div>
+
+    <h3><code>.dockerignore</code></h3>
+    <div class="code-block">
+        <pre id="code4"><code class="plaintext"># Exclude secrets and VCS from build context
+.env
+.git
+node_modules
+        </code></pre>
+        <button class="copy-btn" onclick="copyToClipboard(this, 'code4')">Copy</button>
+    </div>
+
+    <h2>4. Write the <code>Dockerfile</code></h2>
+    <p>Create <code>C:\Working\Dockerfile</code> with:</p>
+    <div class="code-block">
+        <pre id="code5"><code class="dockerfile">FROM node:22-slim
+
+# Set working directory inside container
+WORKDIR /usr/src/app
+
+# Install the Codex CLI globally
+RUN npm install -g @openai/codex
+
+# Default to bash for interactive use
+CMD ["bash"]
+        </code></pre>
+        <button class="copy-btn" onclick="copyToClipboard(this, 'code5')">Copy</button>
+    </div>
+
+    <h2>5. Write the <code>docker-compose.yml</code></h2>
+    <p>Create <code>C:\Working\docker-compose.yml</code>:</p>
+    <div class="code-block">
+        <pre id="code6"><code class="yaml">version: "3.9"
+
+services:
+  codex:
+    build: .
+    volumes:
+      - C:\\Working:/usr/src/app    # Mount local Windows folder
+    working_dir: /usr/src/app
+    env_file:
+      - .env                       # Load OPENAI_API_KEY from .env
+    tty: true                      # Keep the shell open for interaction
+        </code></pre>
+        <button class="copy-btn" onclick="copyToClipboard(this, 'code6')">Copy</button>
+    </div>
+
+    <h2>6. Build and Run</h2>
+    <ol>
+        <li>Open PowerShell and navigate to your project folder:
+            <div class="code-block">
+                <pre id="code7"><code class="powershell">cd C:\Working
+                </code></pre>
+                <button class="copy-btn" onclick="copyToClipboard(this, 'code7')">Copy</button>
+            </div>
+        </li>
+        <li>Build the Docker image:
+            <div class="code-block">
+                <pre id="code8"><code class="powershell">docker-compose build
+                </code></pre>
+                <button class="copy-btn" onclick="copyToClipboard(this, 'code8')">Copy</button>
+            </div>
+        </li>
+        <li>Start an interactive shell session in the container:
+            <div class="code-block">
+                <pre id="code9"><code class="powershell">docker-compose run codex
+                </code></pre>
+                <button class="copy-btn" onclick="copyToClipboard(this, 'code9')">Copy</button>
+            </div>
+            <ul>
+                <li>You will be at <code>/usr/src/app</code> inside the container.</li>
+                <li>Try verifying your key:
+                    <div class="code-block">
+                        <pre id="code10"><code class="bash">echo $OPENAI_API_KEY
+                        </code></pre>
+                        <button class="copy-btn" onclick="copyToClipboard(this, 'code10')">Copy</button>
+                    </div>
+                </li>
+                <li>Run Codex commands:
+                    <div class="code-block">
+                        <pre id="code11"><code class="bash">codex "Explain what this script does"
+                        </code></pre>
+                        <button class="copy-btn" onclick="copyToClipboard(this, 'code11')">Copy</button>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>Run one-off Codex commands without entering the shell:
+            <div class="code-block">
+                <pre id="code12"><code class="powershell">docker-compose run codex codex "Generate a Node.js HTTP server"
+                </code></pre>
+                <button class="copy-btn" onclick="copyToClipboard(this, 'code12')">Copy</button>
+            </div>
+        </li>
+    </ol>
+
+    <h2>7. Tips and Notes</h2>
+    <ul>
+        <li><strong>Editing Locally:</strong> Any edits you make in <code>C:\Working</code> are immediately available inside the container.</li>
+        <li><strong>Safety:</strong> Secrets never get baked into the image or committed to Git.</li>
+        <li><strong>Extensibility:</strong> You can add other services (databases, caches) to the <code>docker-compose.yml</code> later.</li>
+    </ul>
+
+    <hr>
+    <p>Happy coding with OpenAI Codex in Docker!</p>
+</body>
+</html>

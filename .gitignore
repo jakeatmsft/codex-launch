@@ -1,0 +1,10 @@
+# C:\Working\.gitignore
+
+# Node modules (if you ever add a package.json)
+node_modules/
+
+# Environment files
+.env
+
+# Docker artifacts
+docker-compose.override.yml

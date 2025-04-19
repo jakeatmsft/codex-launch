@@ -1,11 +1,11 @@
-# C:\Working\docker-compose.yml
+# C:\CodexApp\docker-compose.yml
 version: "3.9"
 
 services:
   codex:
     build: .
     volumes:
-      - C:\Working:/usr/src/app    # Mount your Windows folder
+      - C:\CodexApp:/usr/src/app    # Mount your Windows folder
     working_dir: /usr/src/app
     env_file:
       - .env                       # Load OPENAI_API_KEY from .env

@@ -1,4 +1,4 @@
-# C:\Working\Dockerfile
+# C:\CodexApp\Dockerfile
 FROM node:22-slim
 
 # Set working dir inside container

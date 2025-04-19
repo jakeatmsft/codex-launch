@@ -86,11 +86,9 @@
 </head>
 <body>
     <h1>OpenAI Codex CLI Docker Setup</h1>
-    <p>This repository demonstrates how to run the OpenAI Codex CLI inside a Docker container with your local Windows folder mounted for development. It uses an <code>.env</code> file to securely provide your API key and includes <code>.gitignore</code> and <code>.dockerignore</code> to keep secrets and unnecessary files out of version control.</p>
-
-    <h2>Project Structure</h2>
+    <p>This repository demonstrates how to run the OpenAI Codex CLI inside a Docker container with your local Windows folder mounted for development. It uses an <code>.env</code> file to securely provide your API key and includes <code>.gitignore</code> and <code>.dockerignore</code> to keep secrets and unnecessary files out of version control.</p>    <h2>Project Structure</h2>
     <div class="code-block">
-        <pre id="code1"><code class="plaintext">C:\Working
+        <pre id="code1"><code class="plaintext">C:\CodexApp
 ├── Dockerfile
 ├── docker-compose.yml
 ├── .env
@@ -104,10 +102,8 @@
     <ul>
         <li><a href="https://www.docker.com/products/docker-desktop" target="_blank">Docker Desktop</a> installed and running on Windows</li>
         <li>A valid OpenAI API key</li>
-    </ul>
-
-    <h2>2. Create the <code>.env</code> file</h2>
-    <p>In <code>C:\Working\.env</code>, add:</p>
+    </ul>    <h2>2. Create the <code>.env</code> file</h2>
+    <p>In <code>C:\CodexApp\.env</code>, add:</p>
     <div class="code-block">
         <pre id="code2"><code class="env">OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
         </code></pre>
@@ -145,10 +141,8 @@ docker-compose.override.yml
 node_modules
         </code></pre>
         <button class="copy-btn" onclick="copyToClipboard(this, 'code4')">Copy</button>
-    </div>
-
-    <h2>4. Write the <code>Dockerfile</code></h2>
-    <p>Create <code>C:\Working\Dockerfile</code> with:</p>
+    </div>    <h2>4. Write the <code>Dockerfile</code></h2>
+    <p>Create <code>C:\CodexApp\Dockerfile</code> with:</p>
     <div class="code-block">
         <pre id="code5"><code class="dockerfile">FROM node:22-slim
 
@@ -162,10 +156,8 @@ RUN npm install -g @openai/codex
 CMD ["bash"]
         </code></pre>
         <button class="copy-btn" onclick="copyToClipboard(this, 'code5')">Copy</button>
-    </div>
-
-    <h2>5. Write the <code>docker-compose.yml</code></h2>
-    <p>Create <code>C:\Working\docker-compose.yml</code>:</p>
+    </div>    <h2>5. Write the <code>docker-compose.yml</code></h2>
+    <p>Create <code>C:\CodexApp\docker-compose.yml</code>:</p>    
     <div class="code-block">
         <pre id="code6"><code class="yaml">version: "3.9"
 
@@ -173,7 +165,7 @@ services:
   codex:
     build: .
     volumes:
-      - C:\\Working:/usr/src/app    # Mount local Windows folder
+      - C:\\CodexApp:/usr/src/app    # Mount local Windows folder
     working_dir: /usr/src/app
     env_file:
       - .env                       # Load OPENAI_API_KEY from .env
@@ -182,11 +174,10 @@ services:
         <button class="copy-btn" onclick="copyToClipboard(this, 'code6')">Copy</button>
     </div>
 
-    <h2>6. Build and Run</h2>
-    <ol>
+    <h2>6. Build and Run</h2>    <ol>
         <li>Open PowerShell and navigate to your project folder:
             <div class="code-block">
-                <pre id="code7"><code class="powershell">cd C:\Working
+                <pre id="code7"><code class="powershell">cd C:\CodexApp
                 </code></pre>
                 <button class="copy-btn" onclick="copyToClipboard(this, 'code7')">Copy</button>
             </div>

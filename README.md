@@ -5,7 +5,7 @@ This repository demonstrates how to run the OpenAI Codex CLI inside a Docker con
 ## Project Structure
 
 ```
-C:\Working
+C:\CodexApp
 ├── Dockerfile
 ├── docker-compose.yml
 ├── .env
@@ -20,7 +20,7 @@ C:\Working
 
 ## 2. Create the `.env` file
 
-In `C:\Working\.env`, add:
+In `C:\CodexApp\.env`, add:
 
 ```env
 OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -57,7 +57,7 @@ node_modules
 
 ## 4. Write the `Dockerfile`
 
-Create `C:\Working\Dockerfile` with:
+Create `C:\CodexApp\Dockerfile` with:
 
 ```dockerfile
 FROM node:22-slim
@@ -74,7 +74,7 @@ CMD ["bash"]
 
 ## 5. Write the `docker-compose.yml`
 
-Create `C:\Working\docker-compose.yml`:
+Create `C:\CodexApp\docker-compose.yml`:
 
 ```yaml
 version: "3.9"
@@ -83,7 +83,7 @@ services:
   codex:
     build: .
     volumes:
-      - C:\\Working:/usr/src/app    # Mount local Windows folder
+      - C:\\CodexApp:/usr/src/app    # Mount local Windows folder
     working_dir: /usr/src/app
     env_file:
       - .env                       # Load OPENAI_API_KEY from .env
@@ -94,7 +94,7 @@ services:
 
 1. Open PowerShell and navigate to your project folder:
    ```powershell
-   cd C:\Working
+   cd C:\CodexApp
    ```
 2. Build the Docker image:
    ```powershell

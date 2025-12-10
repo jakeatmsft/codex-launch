@@ -3,8 +3,8 @@ services:
   codex:
     build: .
     volumes:
-      - C:\CodexApp:/usr/src/app    # Mount your Windows folder
+      - ./src:/usr/src/app/src         # Mount only src folder
     working_dir: /usr/src/app
     env_file:
-      - .env                       # Load OPENAI_API_KEY from .env
+      - .env                       # Load environment variables from .env
     tty: true                      # Keep the shell open for interaction

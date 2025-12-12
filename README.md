@@ -72,9 +72,16 @@ AZURE_OPENAI_API_KEY=your_openai_api_key_here
      ```bash
      codex "Explain what this script does"
      ```
-4. Run one-off Codex commands without entering the shell:
+4a. Run one-off Codex commands without entering the shell:
    ```powershell
    docker-compose run codex codex "Generate a Node.js HTTP server"
+   ```
+
+4b. Connect to the container and run command `codex` for interactive shell
+   ```powershell
+   docker compose run codex /bin/bash
+
+   $:/usr/src/app# codex 
    ```
 
 ### Tips and Notes

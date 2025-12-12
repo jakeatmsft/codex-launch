@@ -49,7 +49,7 @@ AZURE_OPENAI_API_KEY=your_openai_api_key_here
 > - Rotate or revoke your keys by updating this file.
 > - The container’s shell automatically loads `/usr/src/app/.env`, so your variables are available in each session.
 
-## 4. Add Git and Docker ignores
+## 3a. Add Git and Docker ignores (optional)
 
 ### `.gitignore`
 
@@ -73,7 +73,7 @@ docker-compose.override.yml
 node_modules
 ```
 
-## 5. Write the `Dockerfile`
+## 3b. Write the `Dockerfile` (optional)
 
 Create `Dockerfile` in the project root with:
 
@@ -90,7 +90,7 @@ RUN npm install -g @openai/codex
 CMD ["bash"]
 ```
 
-## 6. Write the `docker-compose.yml`
+## 4. Write the `docker-compose.yml`
 
 Create `docker-compose.yml` in the project root:
 
@@ -108,7 +108,7 @@ services:
     tty: true                      # Keep the shell open for interaction
 ```
 
-## 7. Build and Run
+## 5. Build and Run
 
 1. Open PowerShell (or your preferred shell) and navigate to your project folder:
    ```powershell
@@ -136,7 +136,7 @@ services:
    docker-compose run codex codex "Generate a Node.js HTTP server"
    ```
 
-## 8. Tips and Notes
+### Tips and Notes
 
 - **Editing Locally:** Any edits you make under `./src` are immediately available inside `/usr/src/app/src` in the container.
 - **Project layout:** Keep runnable or draft code in `./src/code` and store reference files or supporting material in `./src/reference`.

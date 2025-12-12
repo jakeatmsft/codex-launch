@@ -39,8 +39,7 @@ AZURE_OPENAI_DOMAIN=RESOURCE-NAME.openai.azure.com
 AZURE_OPENAI_ENDPOINT=https://RESOURCE-NAME.openai.azure.com
 AZURE_OPENAI_DEPLOYMENT_NAME=your_deployment_name_here
 AZURE_OPENAI_API_KEY=your_openai_api_key_here
-# Optional: keep if you also use the public OpenAI API
-# OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
 ```
 
 > **Note:**
@@ -49,66 +48,8 @@ AZURE_OPENAI_API_KEY=your_openai_api_key_here
 > - Rotate or revoke your keys by updating this file.
 > - The container’s shell automatically loads `/usr/src/app/.env`, so your variables are available in each session.
 
-## 3a. Add Git and Docker ignores (optional)
 
-### `.gitignore`
-
-```gitignore
-# Ignore Node modules
-node_modules/
-
-# Ignore environment files
-.env
-
-# Ignore Docker Compose overrides
-docker-compose.override.yml
-```
-
-### `.dockerignore`
-
-```dockerignore
-# Exclude secrets and VCS from build context
-.env
-.git
-node_modules
-```
-
-## 3b. Write the `Dockerfile` (optional)
-
-Create `Dockerfile` in the project root with:
-
-```dockerfile
-FROM node:22-slim
-
-# Set working directory inside container
-WORKDIR /usr/src/app
-
-# Install the Codex CLI globally
-RUN npm install -g @openai/codex
-
-# Default to bash for interactive use
-CMD ["bash"]
-```
-
-## 4. Write the `docker-compose.yml`
-
-Create `docker-compose.yml` in the project root:
-
-```yaml
-version: "3.9"
-
-services:
-  codex:
-    build: .
-    volumes:
-      - ./src:/usr/src/app/src      # Mount only the src folder
-    working_dir: /usr/src/app
-    env_file:
-      - .env                       # Load Azure/OpenAI keys from .env
-    tty: true                      # Keep the shell open for interaction
-```
-
-## 5. Build and Run
+## 4. Build and Run
 
 1. Open PowerShell (or your preferred shell) and navigate to your project folder:
    ```powershell

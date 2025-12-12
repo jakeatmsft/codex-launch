@@ -5,13 +5,18 @@ This repository demonstrates how to run the OpenAI Codex CLI inside a Docker con
 ## Project Structure
 
 ```
-C:\CodexApp
+.
 ├── Dockerfile
 ├── docker-compose.yml
 ├── .env
 ├── .gitignore
-└── .dockerignore
+├── .dockerignore
+└── src
+    ├── code
+    └── reference
 ```
+
+Place your application code in `src/code` and any reference materials (docs, snippets, sample data) in `src/reference`. Both folders are mounted into the container at `/usr/src/app/src`.
 
 ## 1. Deploy a Codex model in Azure AI Foundry
 
@@ -27,7 +32,7 @@ C:\CodexApp
 
 ## 3. Create the `.env` file
 
-In `C:\CodexApp\.env`, add the Azure settings used by the Codex config and CLI:
+In the project root `.env`, add the Azure settings used by the Codex config and CLI:
 
 ```env
 AZURE_OPENAI_DOMAIN=RESOURCE-NAME.openai.azure.com
@@ -70,7 +75,7 @@ node_modules
 
 ## 5. Write the `Dockerfile`
 
-Create `C:\CodexApp\Dockerfile` with:
+Create `Dockerfile` in the project root with:
 
 ```dockerfile
 FROM node:22-slim
@@ -87,7 +92,7 @@ CMD ["bash"]
 
 ## 6. Write the `docker-compose.yml`
 
-Create `C:\CodexApp\docker-compose.yml`:
+Create `docker-compose.yml` in the project root:
 
 ```yaml
 version: "3.9"
@@ -105,9 +110,9 @@ services:
 
 ## 7. Build and Run
 
-1. Open PowerShell and navigate to your project folder:
+1. Open PowerShell (or your preferred shell) and navigate to your project folder:
    ```powershell
-   cd C:\CodexApp
+   cd /path/to/your/project
    ```
 2. Build the Docker image:
    ```powershell
@@ -134,6 +139,7 @@ services:
 ## 8. Tips and Notes
 
 - **Editing Locally:** Any edits you make under `./src` are immediately available inside `/usr/src/app/src` in the container.
+- **Project layout:** Keep runnable or draft code in `./src/code` and store reference files or supporting material in `./src/reference`.
 - **Safety:** Secrets never get baked into the image or committed to Git.
 - **Extensibility:** You can add other services (databases, caches) to the `docker-compose.yml` later.
 

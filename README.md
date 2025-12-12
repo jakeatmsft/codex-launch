@@ -18,6 +18,11 @@ This repository demonstrates how to run the OpenAI Codex CLI inside a Docker con
 
 Place your application code in `src/code` and any reference materials (docs, snippets, sample data) in `src/reference`. Both folders are mounted into the container at `/usr/src/app/src`.
 
+## Prerequisites
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running on Windows
+
+
 ## 1. Deploy a Codex model in Azure AI Foundry
 
 1. Go to [Azure AI Foundry](https://ai.azure.com) and create a new project.
@@ -25,12 +30,7 @@ Place your application code in `src/code` and any reference materials (docs, sni
 3. Click **Deploy**, choose a name, and wait about two minutes.
 4. Copy the Endpoint URL and API key.
 
-## 2. Prerequisites
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running on Windows
-- A valid OpenAI API key
-
-## 3. Create the `.env` file
+## 2. Create the `.env` file
 
 In the project root `.env`, add the Azure settings used by the Codex config and CLI:
 
@@ -49,7 +49,7 @@ AZURE_OPENAI_API_KEY=your_openai_api_key_here
 > - The container’s shell automatically loads `/usr/src/app/.env`, so your variables are available in each session.
 
 
-## 4. Build and Run
+## 3. Build and Run
 
 1. Open PowerShell (or your preferred shell) and navigate to your project folder:
    ```powershell

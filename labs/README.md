@@ -28,11 +28,11 @@ graph TB
     HostFS -.->|Volume Mount| ContainerFS
     Codex <-->|HTTPS API Calls| OpenAI
     
-    style Docker fill:#e1f5ff,stroke:#0078d4,stroke-width:3px
-    style Host fill:#f0f0f0,stroke:#666,stroke-width:2px
-    style Cloud fill:#fff4e1,stroke:#ff9800,stroke-width:2px
-    style ContainerOS fill:#cceeff,stroke:#0078d4,stroke-width:2px
-    style User fill:#d4edda,stroke:#28a745,stroke-width:2px
+    style Docker fill:#e1f5ff,stroke:#0078d4,stroke-width:3px,color:#000
+    style Host fill:#f0f0f0,stroke:#666,stroke-width:2px,color:#000
+    style Cloud fill:#fff4e1,stroke:#ff9800,stroke-width:2px,color:#000
+    style ContainerOS fill:#cceeff,stroke:#0078d4,stroke-width:2px,color:#000
+    style User fill:#d4edda,stroke:#28a745,stroke-width:2px,color:#000
 ```
 
 - [Lab 1: Hello Codex Code Generation](lab1-hello-world.md)

@@ -52,16 +52,16 @@ graph TB
     ContainerFS -.->|"⑬ Volume Mount (sync all changes)"| HostFS
     CoordFS -.->|"⑬ Volume Mount (sync coordination)"| CoordFile
     
-    style Docker fill:#e1f5ff,stroke:#0078d4,stroke-width:3px
-    style Host fill:#f0f0f0,stroke:#666,stroke-width:2px
-    style Cloud fill:#fff4e1,stroke:#ff9800,stroke-width:2px
-    style Tmux fill:#b3e5fc,stroke:#01579b,stroke-width:2px
-    style PaneA fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
-    style PaneB fill:#fff9c4,stroke:#f57f17,stroke-width:2px
-    style PaneC fill:#ffccbc,stroke:#d84315,stroke-width:2px
-    style User fill:#d4edda,stroke:#28a745,stroke-width:2px
-    style CoordFile fill:#e1bee7,stroke:#6a1b9a,stroke-width:2px
-    style CoordFS fill:#e1bee7,stroke:#6a1b9a,stroke-width:2px
+    style Docker fill:#e1f5ff,stroke:#0078d4,stroke-width:3px,color:#000
+    style Host fill:#f0f0f0,stroke:#666,stroke-width:2px,color:#000
+    style Cloud fill:#fff4e1,stroke:#ff9800,stroke-width:2px,color:#000
+    style Tmux fill:#b3e5fc,stroke:#01579b,stroke-width:2px,color:#000
+    style PaneA fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px,color:#000
+    style PaneB fill:#fff9c4,stroke:#f57f17,stroke-width:2px,color:#000
+    style PaneC fill:#ffccbc,stroke:#d84315,stroke-width:2px,color:#000
+    style User fill:#d4edda,stroke:#28a745,stroke-width:2px,color:#000
+    style CoordFile fill:#e1bee7,stroke:#6a1b9a,stroke-width:2px,color:#000
+    style CoordFS fill:#e1bee7,stroke:#6a1b9a,stroke-width:2px,color:#000
 ```
 
 **Workflow Steps:**

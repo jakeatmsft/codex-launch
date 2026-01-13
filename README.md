@@ -84,6 +84,25 @@ AZURE_OPENAI_API_KEY=your_openai_api_key_here
    $:/usr/src/app# codex 
    ```
 
+## 4. Coordinate multiple Codex sessions with tmux
+
+Use `tmux` inside the container to run and monitor multiple Codex sessions in one terminal:
+
+1. Start a session (from inside the container):
+   ```bash
+   tmux new -s codex
+   ```
+2. Open extra views for parallel work:
+   - New window: press `Ctrl+b` then `c`.
+   - Split pane: press `Ctrl+b` then `%` (vertical) or `"` (horizontal).
+3. Run `codex` in each pane/window; all share the same mounted `src` folder and environment.
+4. Detach and reattach without losing state:
+   ```bash
+   Ctrl+b d        # detach
+   tmux ls         # list sessions
+   tmux attach -t codex
+   ```
+
 ### Tips and Notes
 
 - **Editing Locally:** Any edits you make under `./src` are immediately available inside `/usr/src/app/src` in the container.

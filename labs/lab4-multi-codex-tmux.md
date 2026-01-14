@@ -1,7 +1,11 @@
 # Lab 4: Multi-Codex Coordination with tmux
 
 <p align="center">
-  <strong>👤 User:</strong> <em>"Coordinate multiple tasks"</em> + 📄 <strong>AGENTS.md</strong> → <img src="../uni-dev.png" width="40" alt="Codex CLI A" style="vertical-align: middle;" /> <img src="../uni-dev.png" width="40" alt="Codex CLI B" style="vertical-align: middle;" /> <img src="../uni-dev.png" width="40" alt="Codex CLI C" style="vertical-align: middle;" /> ← 📁 <strong>Shared Codebase</strong>
+  <strong>👤 User:</strong> <em>"Coordinate multiple tasks"</em> + 📄 <strong>AGENTS.md</strong> → 
+  <span style="display:inline-block;text-align:center;margin:0 5px;"><img src="../uni-dev.png" width="40" alt="Planner" /><br/><small>Planner</small></span>
+  <span style="display:inline-block;text-align:center;margin:0 5px;"><img src="../uni-dev.png" width="40" alt="Builder" /><br/><small>Builder</small></span>
+  <span style="display:inline-block;text-align:center;margin:0 5px;"><img src="../uni-dev.png" width="40" alt="Tester" /><br/><small>Runner</small></span>
+  ← 📁 <strong>Shared Codebase</strong>
 </p>
 
 Run several Codex sessions side-by-side with `tmux` so you can generate code, review output, and run commands in parallel.
@@ -25,7 +29,7 @@ graph TB
             subgraph PaneB["Pane B: Builder"]
                 CodexB["<img src='../uni-dev.png' width='30' /><br/>Codex CLI B"]
             end
-            subgraph PaneC["Pane C: Runner"]
+            subgraph PaneC["Pane C: Tester"]
                 CodexC["<img src='../uni-dev.png' width='30' /><br/>Codex CLI C"]
             end
             ContainerFS["Shared Container FS<br/>/usr/src/app/src/code/"]
@@ -79,8 +83,8 @@ graph TB
 8. **Pane B (Builder)**: Sends code generation request to Azure OpenAI
 9. **Pane B (Builder)**: Receives generated code from Azure
 10. **Pane B (Builder)**: Writes code files to shared container filesystem
-11. **Pane C (Runner)**: Executes tests or runs generated code
-12. **Pane C (Runner)**: Logs test results and outcomes back to AGENTS.md
+11. **Pane C (Tester)**: Executes tests or runs generated code
+12. **Pane C (Tester)**: Logs test results and outcomes back to AGENTS.md
 13. All changes sync bidirectionally between container and host via volume mount
 
 **Key Coordination Pattern:**

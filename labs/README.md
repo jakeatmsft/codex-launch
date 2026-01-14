@@ -14,19 +14,19 @@ graph TB
     
     subgraph Docker["Docker Secured Container"]
         subgraph ContainerOS["Container OS"]
-            Codex["Codex CLI"]
-            ContainerFS["Container Filesystem<br/>/usr/src/app/src"]
+            Codex["<img src='../uni-dev.png' width='30' /><br/>Codex CLI"]
+            ContainerFS["Container Filesystem<br/>/usr/src/app"]
         end
     end
     
     subgraph Cloud["Azure Cloud"]
-        OpenAI["OpenAI API<br/>(Azure)"]
+        OpenAI["Codex Model<br/> (Azure Foundry)"]
     end
     
     User -->|Edits Files| HostFS
-    User -->|Docker Exec| Codex
+    User -->|Dev Tasks : 'Fix this code...'| Codex
     HostFS -.->|Volume Mount| ContainerFS
-    Codex <-->|HTTPS API Calls| OpenAI
+    Codex <-->| Model API Calls| OpenAI
     
     style Docker fill:#e1f5ff,stroke:#0078d4,stroke-width:3px,color:#000
     style Host fill:#f0f0f0,stroke:#666,stroke-width:2px,color:#000

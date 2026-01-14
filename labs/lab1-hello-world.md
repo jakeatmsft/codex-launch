@@ -1,5 +1,9 @@
 # Lab 1: Hello Codex Code Generation
 
+<p align="center">
+  <strong>👤 User:</strong> <em>"Create a hello world application"</em> → <img src="../uni-dev.png" width="50" alt="Codex CLI" style="vertical-align: middle;" />
+</p>
+
 Start with a minimal command that asks Codex to write and run a "hello world" program so you can verify the CLI, container mount, and environment.
 
 ## Architecture & Workflow
@@ -14,13 +18,13 @@ graph TB
     
     subgraph Docker["Docker Secured Container"]
         subgraph ContainerOS["Container OS"]
-            Codex["Codex CLI"]
+            Codex["<img src='../uni-dev.png' width='30' /><br/>Codex CLI"]
             ContainerFS["Container Filesystem<br/>/usr/src/code/"]
         end
     end
     
     subgraph Cloud["Azure Cloud"]
-        OpenAI["OpenAI API<br/>(Azure)"]
+        OpenAI["Codex Model<br/> (Azure Foundry)"]
     end
     
     User -.->|"② codex 'Create lab1_hello.py...'"| Codex

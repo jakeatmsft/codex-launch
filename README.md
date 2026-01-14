@@ -1,5 +1,13 @@
 # OpenAI Codex CLI Docker Setup
 
+<img src="uni-dev.png" width="120" alt="Codex CLI" align="right" />
+
+> *Have you ever wished you had the skills of a unicorn developer?* 🦄
+
+With OpenAI Codex models, you can. Codex transforms natural language into working code, enabling you to tackle any development task—from generating boilerplate and refactoring legacy systems to writing tests, debugging complex issues, and building entire features from a simple description. Whether you're a seasoned engineer or just getting started, Codex amplifies your capabilities, letting you focus on *what* you want to build while it handles the *how*.
+
+Unlike IDE-based AI assistants that operate in a sandbox, the Codex CLI has access to your filesystem—it can read, write, move, and delete files, run shell commands, execute scripts, and interact with your entire development environment. This means Codex can scaffold projects, install dependencies, run builds, and even deploy your code. Plus, you're not locked into a single model: choose from a range of reasoning models and are not limited by the IDE rate-limiting your requests.
+
 This repository demonstrates how to run the OpenAI Codex CLI inside a Docker container with your local `src` folder mounted for development. It uses an `.env` file to securely provide your API keys and includes `.gitignore` and `.dockerignore` to keep secrets and unnecessary files out of version control. The Dockerfile also writes a Codex config at `~/.codex/config.toml` that points to your Azure OpenAI endpoint.
 
 ## Project Structure

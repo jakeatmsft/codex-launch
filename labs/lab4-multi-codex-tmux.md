@@ -1,5 +1,9 @@
 # Lab 4: Multi-Codex Coordination with tmux
 
+<p align="center">
+  <strong>👤 User:</strong> <em>"Coordinate multiple tasks"</em> + 📄 <strong>AGENTS.md</strong> → <img src="../uni-dev.png" width="40" alt="Codex CLI A" style="vertical-align: middle;" /> <img src="../uni-dev.png" width="40" alt="Codex CLI B" style="vertical-align: middle;" /> <img src="../uni-dev.png" width="40" alt="Codex CLI C" style="vertical-align: middle;" /> ← 📁 <strong>Shared Codebase</strong>
+</p>
+
 Run several Codex sessions side-by-side with `tmux` so you can generate code, review output, and run commands in parallel.
 
 ## Architecture & Workflow
@@ -16,13 +20,13 @@ graph TB
     subgraph Docker["Docker Secured Container"]
         subgraph Tmux["tmux Session"]
             subgraph PaneA["Pane A: Planner"]
-                CodexA["Codex CLI A"]
+                CodexA["<img src='../uni-dev.png' width='30' /><br/>Codex CLI A"]
             end
             subgraph PaneB["Pane B: Builder"]
-                CodexB["Codex CLI B"]
+                CodexB["<img src='../uni-dev.png' width='30' /><br/>Codex CLI B"]
             end
             subgraph PaneC["Pane C: Runner"]
-                CodexC["Codex CLI C"]
+                CodexC["<img src='../uni-dev.png' width='30' /><br/>Codex CLI C"]
             end
             ContainerFS["Shared Container FS<br/>/usr/src/app/src/code/"]
             CoordFS["AGENTS.md<br/>(coordination)"]
@@ -30,7 +34,7 @@ graph TB
     end
     
     subgraph Cloud["Azure Cloud"]
-        OpenAI["OpenAI API<br/>(Azure)"]
+        OpenAI["Codex Model<br/> (Azure Foundry)"]
     end
     
     User -.->|"① Start tmux session"| Tmux

@@ -1,5 +1,10 @@
 # Lab 3: Working with an Existing Code Base
 
+
+<p align="center">
+  <strong>👤 User:</strong> <em>"Extend this code"</em> + 📄 <strong>AGENTS.md</strong> → <img src="../uni-dev.png" width="50" alt="Codex CLI" style="vertical-align: middle;" /> ← 📁 <strong>Existing Codebase</strong>
+</p>
+
 Use Codex to extend or refactor code that already exists on disk. This lab keeps the context in `src/code` so Codex can read and modify files directly.
 
 ## Architecture & Workflow
@@ -15,14 +20,14 @@ graph TB
     
     subgraph Docker["Docker Secured Container"]
         subgraph ContainerOS["Container OS"]
-            Codex["Codex CLI"]
+            Codex["<img src='../uni-dev.png' width='30' /><br/>Codex CLI"]
             ContainerFS["Container Filesystem<br/>/usr/src/app/src/code/lab3_orders/"]
             ExistingFS["order_service.py<br/>(existing)"]
         end
     end
     
     subgraph Cloud["Azure Cloud"]
-        OpenAI["OpenAI API<br/>(Azure)"]
+        OpenAI["Codex Model<br/> (Azure Foundry)"]
     end
     
     User -.->|"① Create lab3_orders folder"| HostFS

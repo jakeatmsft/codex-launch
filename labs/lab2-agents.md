@@ -1,5 +1,9 @@
 # Lab 2: Guiding Codex with AGENTS.md
 
+<p align="center">
+  <strong>👤 User:</strong> <em>"Create some code for me but follow these instructions"</em> + 📄 <strong>AGENTS.md</strong> → <img src="../uni-dev.png" width="50" alt="Codex CLI" style="vertical-align: middle;" />
+</p>
+
 Teach Codex how you want code to look by adding an `AGENTS.md` file that sets conventions for a folder before asking it to generate new code.
 
 ## Architecture & Workflow
@@ -15,14 +19,14 @@ graph TB
     
     subgraph Docker["Docker Secured Container"]
         subgraph ContainerOS["Container OS"]
-            Codex["Codex CLI"]
+            Codex["<img src='../uni-dev.png' width='30' /><br/>Codex CLI"]
             ContainerFS["Container Filesystem<br/>/usr/src/app/src/code/lab2_agents/"]
             AgentsFS["AGENTS.md"]
         end
     end
     
     subgraph Cloud["Azure Cloud"]
-        OpenAI["OpenAI API<br/>(Azure)"]
+        OpenAI["Codex Model<br/> (Azure Foundry)"]
     end
     
     User -.->|"① Create lab2_agents folder"| HostFS

@@ -26,7 +26,7 @@ Place your application code in `src/code` and any reference materials (docs, sni
 ## 1. Deploy a Codex model in Azure AI Foundry
 
 1. Go to [Azure AI Foundry](https://ai.azure.com) and create a new project.
-2. Select a reasoning model such as `codex-mini`, `gpt-5`, or `gpt-5-mini`.
+2. Select a reasoning model such as `codex-mini`, `gpt-5-codex`, or `gpt-5.1-codex`.
 3. Click **Deploy**, choose a name, and wait about two minutes.
 4. Copy the Endpoint URL and API key.
 

@@ -2,7 +2,7 @@
 
 
 <p align="center">
-  <strong>👤 User:</strong> <em>"Extend this code"</em> + 📄 <strong>AGENTS.md</strong> → <img src="../uni-dev.png" width="50" alt="Codex CLI" style="vertical-align: middle;" /> ← 📁 <strong>Existing Codebase</strong>
+  <strong>👤 User:</strong> <em>"Extend this code using the following instructions "</em> + 📄 <strong>AGENTS.md</strong> → <img src="../uni-dev.png" width="50" alt="Codex CLI" style="vertical-align: middle;" /> ← 📁 <strong>Existing Codebase</strong>
 </p>
 
 Use Codex to extend or refactor code that already exists on disk. This lab keeps the context in `src/code` so Codex can read and modify files directly.

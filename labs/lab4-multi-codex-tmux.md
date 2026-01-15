@@ -98,7 +98,7 @@ graph TB
 
 ## Prerequisites
 - Labs 1–3 completed and a container shell open at `/usr/src/app` (`docker compose run codex /bin/bash`).
-- Local `./src` mounted to `/usr/src/app/src` so every tmux pane sees the same files.
+- Local `./src` mounted to `/usr/src/app/` so every tmux pane sees the same files.
 
 ## Steps
 1. Start a dedicated tmux session:

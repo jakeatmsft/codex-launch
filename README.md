@@ -34,7 +34,7 @@ Place your application code in `src/code` and any reference materials (docs, sni
 ## 1. Deploy a Codex model in Azure AI Foundry
 
 1. Go to [Azure AI Foundry](https://ai.azure.com) and create a new project.
-2. Select a reasoning model such as `codex-mini`, `gpt-5-codex`, or `gpt-5.1-codex`.
+2. Select a SOTA coding model such as `gpt-5-codex`, `gpt-5.1-codex-max`, or `gpt-5.2-codex` (NEW).
 3. Click **Deploy**, choose a name, and wait about two minutes.
 4. Copy the Endpoint URL and API key.
 
@@ -78,7 +78,7 @@ AZURE_OPENAI_API_KEY=your_openai_api_key_here
      ```
    - Run Codex commands:
      ```bash
-     codex "Explain what this script does"
+     codex "Explain what is in my current environment"
      ```
 4a. Run one-off Codex commands without entering the shell:
    ```powershell

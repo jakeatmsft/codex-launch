@@ -1,6 +1,5 @@
 # Start Vibe Coding today!
-![Demo video]([https://youtu.be/oAc-ihUNXRE])
-
+![Demo video](https://youtu.be/oAc-ihUNXRE)
 
 
 # OpenAI Codex CLI Docker Setup

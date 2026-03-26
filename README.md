@@ -31,14 +31,15 @@ Place your application code in `src/code` and any reference materials (docs, sni
 
 ## Prerequisites
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running on Windows
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running 
+Recommended in WSL
 - [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) installed in your host environment (WSL recommended for this flow)
 
 
 ## 1. Deploy a Codex model in Azure AI Foundry
 
 1. Go to [Azure AI Foundry](https://ai.azure.com) and create a new project.
-2. Select a SOTA coding model such as `gpt-5-codex`, `gpt-5.1-codex-max`, or `gpt-5.2-codex` (NEW).
+2. Select a SOTA coding model such as `gpt-5-codex`, `gpt-5.1-codex-max`, `gpt-5.2-codex`,  `gpt-5.3-codex`, `gpt-5.4` (NEW).
 3. Click **Deploy**, choose a name, and wait about two minutes.
 4. Copy the Endpoint URL and deployment name.
 

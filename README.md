@@ -8,7 +8,7 @@ With OpenAI Codex models, you can. Codex transforms natural language into workin
 
 Unlike IDE-based AI assistants that operate in a sandbox, the Codex CLI has access to your filesystem—it can read, write, move, and delete files, run shell commands, execute scripts, and interact with your entire development environment. This means Codex can scaffold projects, install dependencies, run builds, and even deploy your code. Plus, you're not locked into a single model: choose from a range of reasoning models and are not limited by the IDE rate-limiting your requests.
 
-This repository demonstrates how to run the OpenAI Codex CLI inside a Docker container with your local `src` folder mounted for development. It uses an `.env` file to securely provide your API keys and includes `.gitignore` and `.dockerignore` to keep secrets and unnecessary files out of version control. The Dockerfile also writes a Codex config at `~/.codex/config.toml` that points to your Azure OpenAI endpoint.
+This repository demonstrates how to run the OpenAI Codex CLI inside a Docker container with your local project folder mounted for development. It uses an `.env` file for Azure endpoint/model settings and injects an Entra access token as `AZURE_OPENAI_API_KEY` from a host-managed token file. The Dockerfile also writes a Codex config at `~/.codex/config.toml` that points to your Azure OpenAI endpoint.
 
 ## Project Structure
 
@@ -24,11 +24,12 @@ This repository demonstrates how to run the OpenAI Codex CLI inside a Docker con
     └── reference
 ```
 
-Place your application code in `src/code` and any reference materials (docs, snippets, sample data) in `src/reference`. Both folders are mounted into the container at `/usr/src/app/src`.
+Place your application code in `src/code` and any reference materials (docs, snippets, sample data) in `src/reference`. The whole project is mounted into the container at `/usr/src/app`.
 
 ## Prerequisites
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running on Windows
+- [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) installed in your host environment (WSL recommended for this flow)
 
 
 ## 1. Deploy a Codex model in Azure AI Foundry
@@ -36,9 +37,19 @@ Place your application code in `src/code` and any reference materials (docs, sni
 1. Go to [Azure AI Foundry](https://ai.azure.com) and create a new project.
 2. Select a SOTA coding model such as `gpt-5-codex`, `gpt-5.1-codex-max`, or `gpt-5.2-codex` (NEW).
 3. Click **Deploy**, choose a name, and wait about two minutes.
-4. Copy the Endpoint URL and API key.
+4. Copy the Endpoint URL and deployment name.
 
-## 2. Create the `.env` file
+## 2. Create a host Azure CLI profile for Docker
+
+Open WSL and create a separate Azure CLI profile that the container can mount:
+
+```bash
+cd /mnt/c/Users/<your-username>
+mkdir -p .azure-for-docker
+AZURE_CONFIG_DIR=./.azure-for-docker az login
+```
+
+## 3. Create the `.env` file
 
 In the project root `.env`, add the Azure settings used by the Codex config and CLI:
 
@@ -46,18 +57,31 @@ In the project root `.env`, add the Azure settings used by the Codex config and 
 AZURE_OPENAI_DOMAIN=RESOURCE-NAME.openai.azure.com
 AZURE_OPENAI_ENDPOINT=https://RESOURCE-NAME.openai.azure.com
 AZURE_OPENAI_DEPLOYMENT_NAME=your_deployment_name_here
-AZURE_OPENAI_API_KEY=your_openai_api_key_here
+AZURE_OPENAI_API_KEY_FILE=/root/.azure/aoai-access-token
 
 ```
 
 > **Note:**
 >
 > - Never commit the `.env` file to Git.
-> - Rotate or revoke your keys by updating this file.
+> - `AZURE_OPENAI_API_KEY_FILE` is the token file path inside the container.
 > - The container’s shell automatically loads `/usr/src/app/.env`, so your variables are available in each session.
 
+## 4. Refresh the access token on the host
 
-## 3. Build and Run
+From the repository root in WSL:
+
+```bash
+AZURE_CONFIG_DIR=/mnt/c/Users/<your-username>/.azure-for-docker ./scripts/refresh-azure-openai-token.sh
+```
+
+This writes a fresh token to:
+
+```text
+/mnt/c/Users/<your-username>/.azure-for-docker/aoai-access-token
+```
+
+## 5. Build and Run
 
 1. Open PowerShell (or your preferred shell) and navigate to your project folder:
    ```powershell
@@ -72,9 +96,9 @@ AZURE_OPENAI_API_KEY=your_openai_api_key_here
    docker-compose run codex
    ```
    - You will be at `/usr/src/app` inside the container.
-   - Try verifying your key:
+   - Verify token injection:
      ```bash
-     echo $AZURE_OPENAI_API_KEY
+     echo ${#AZURE_OPENAI_API_KEY}
      ```
    - Run Codex commands:
      ```bash
@@ -92,7 +116,19 @@ AZURE_OPENAI_API_KEY=your_openai_api_key_here
    $:/usr/src/app# codex 
    ```
 
-## 4. Coordinate multiple Codex sessions with tmux
+## 6. Refresh token while container is already running
+
+1. On the host, refresh the token again:
+   ```bash
+   AZURE_CONFIG_DIR=/mnt/c/Users/<your-username>/.azure-for-docker ./scripts/refresh-azure-openai-token.sh
+   ```
+2. In the open container shell, press Enter once (the prompt hook reloads the token file).
+3. Re-check:
+   ```bash
+   echo ${#AZURE_OPENAI_API_KEY}
+   ```
+
+## 7. Coordinate multiple Codex sessions with tmux
 
 Use `tmux` inside the container to run and monitor multiple Codex sessions in one terminal:
 

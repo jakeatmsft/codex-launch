@@ -3,8 +3,12 @@ services:
   codex:
     build: .
     volumes:
-      - ./src:/usr/src/app/src         # Mount only src folder
+      - ./src:/usr/src/app                # Mount full project so all local folders are available
+      - ${HOME}/.azure-for-docker:/root/.azure    # Host token cache and refreshed access-token file
     working_dir: /usr/src/app
     env_file:
       - .env                       # Load environment variables from .env
+    environment:
+      AZURE_CONFIG_DIR: /root/.azure
+      AZURE_OPENAI_API_KEY_FILE: /root/.azure/aoai-access-token
     tty: true                      # Keep the shell open for interaction

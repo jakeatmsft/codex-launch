@@ -19,7 +19,7 @@ graph TB
     subgraph Docker["Docker Secured Container"]
         subgraph ContainerOS["Container OS"]
             Codex["<img src='../uni-dev.png' width='30' /><br/>Codex CLI"]
-            ContainerFS["Container Filesystem<br/>/usr/src/code/"]
+            ContainerFS["Container Filesystem<br/>/usr/src/app/code/"]
         end
     end
     
@@ -56,29 +56,29 @@ graph TB
 
 ## Prerequisites
 - Docker image built from this repo and `.env` configured.
-- Container shell started with `docker compose run codex /bin/bash` so your local `./src` is mounted to `/usr/src/app/src`.
+- Container shell started with `docker compose run codex /bin/bash` so your local `./src` is mounted to `/usr/src/app`.
 
 ## Steps
 1. Launch the container if you are not already inside:
    ```bash
    docker compose run codex /bin/bash
    ```
-2. Ask Codex to create a simple Python script under the mounted `src` folder:
+2. Ask Codex to create a simple Python script in the mounted workspace (`/usr/src/app` in container, `./src` on host):
    ```bash
-   codex "Create src/code/lab1_hello.py that prints 'Hello Codex' when run as a script. Use a main() function and call it under the usual __main__ guard."
+   codex "Create code/lab1_hello.py that prints 'Hello Codex' when run as a script. Use a main() function and call it under the usual __main__ guard."
    ```
 3. Inspect the generated file:
    ```bash
-   sed -n '1,80p' src/code/lab1_hello.py
+   sed -n '1,80p' code/lab1_hello.py
    ```
 4. Run the program to confirm it works:
    ```bash
-   python src/code/lab1_hello.py
+   python code/lab1_hello.py
    ```
 5. Optional: from your host machine, confirm the same file appears under `./src/code/lab1_hello.py` to verify the mount is working.
 6. Iterate by asking Codex to accept a `--name` argument and personalize the greeting.
 
 ## What to Observe
-- Codex writes files directly into `src/code`, which is mounted from your host.
+- Codex writes files directly into `code/` in the container (`./src/code` on host).
 - The command prompt can mix creation instructions and validation steps.
 - Host and container views of `./src` stay in sync, verifying the mount.

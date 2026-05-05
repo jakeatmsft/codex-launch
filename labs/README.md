@@ -1,6 +1,6 @@
 # Codex Labs
 
-Four progressive labs for practicing code generation with the OpenAI Codex CLI. Each lab builds on the previous one and assumes you are working inside the Codex Docker container from the project README, where your local `./src` folder is mounted to `/usr/src,/app/src` inside the container.
+Four progressive labs for practicing code generation with the OpenAI Codex CLI. Each lab builds on the previous one and assumes you are working inside the Codex Docker container from the project README, where your local `./src` folder is mounted to `/usr/src/app` inside the container.
 
 ## Architecture Overview
 

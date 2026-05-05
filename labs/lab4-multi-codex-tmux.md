@@ -32,7 +32,7 @@ graph TB
             subgraph PaneC["Pane C: Tester"]
                 CodexC["<img src='../uni-dev.png' width='30' /><br/>Codex CLI C"]
             end
-            ContainerFS["Shared Container FS<br/>/usr/src/app/src/code/"]
+            ContainerFS["Shared Container FS<br/>/usr/src/app/code/"]
             CoordFS["AGENTS.md<br/>(coordination)"]
         end
     end
@@ -99,6 +99,7 @@ graph TB
 ## Prerequisites
 - Labs 1–3 completed and a container shell open at `/usr/src/app` (`docker compose run codex /bin/bash`).
 - Local `./src` mounted to `/usr/src/app/` so every tmux pane sees the same files.
+- `tmux` installed in the container (`apt-get update && apt-get install -y tmux`) if not already available.
 
 ## Steps
 1. Start a dedicated tmux session:
@@ -111,11 +112,11 @@ graph TB
    - Horizontal split: `Ctrl+b` then `"`.
 3. Add a tmux coordination `AGENTS.md` that all Codex sessions will follow (create once; all panes share it via the mounted `./src`):
    ```bash
-   mkdir -p src/code/lab4_tmux
-   cat <<'EOF' > src/code/lab4_tmux/AGENTS.md
+   mkdir -p code/lab4_tmux
+   cat <<'EOF' > code/lab4_tmux/AGENTS.md
    # TMUX Coordination for Codex Labs
    - Pane A (Planner): draft prompts and update this AGENTS.md as the single source of truth for tasks.
-   - Pane B (Builder): run Codex commands exactly as written in Planner, writing code under ./src/code.
+   - Pane B (Builder): run Codex commands exactly as written in Planner, writing code under ./code (host: ./src/code).
    - Pane C (Runner): execute tests/commands as soon as Builder outputs code; report failures back in Planner.
    - All panes must keep the same task in flight and proceed concurrently; do not advance steps until all three panes have completed the current task.
    - Log key commands and outcomes in this file so every pane stays synchronized.
@@ -126,13 +127,13 @@ graph TB
    - **Pane B (Builder):** run Codex commands that write code, e.g., continuing Lab 3 changes.
    - **Pane C (Runner):** execute generated code, run tests, or view logs.
 5. Example flow continuing Lab 3 (execute concurrently with all three Codex panes using the shared AGENTS.md):
-   - Pane A: refine `src/code/lab4_tmux/AGENTS.md` with the next task (e.g., "add pytest tests for order_service").
-   - Pane B: run `codex "Follow src/code/lab4_tmux/AGENTS.md. Read src/code/lab3_orders/order_service.py and add pytest tests under tests/test_orders.py"`
+   - Pane A: refine `code/lab4_tmux/AGENTS.md` with the next task (e.g., "add pytest tests for order_service").
+   - Pane B: run `codex "Follow code/lab4_tmux/AGENTS.md. Read code/lab3_orders/order_service.py and add pytest tests under tests/test_orders.py"`
    - Pane C: in parallel, run `python -m pytest` after Builder finishes, then note results back into `AGENTS.md` so Planner can adjust.
 6. Manage the session:
    - Switch panes: `Ctrl+b` then arrow keys.
    - Detach/reattach: `Ctrl+b d`, `tmux attach -t codex-labs`.
-   - Capture a pane log to share a Codex conversation: `tmux capture-pane -pS -500 > labs/tmux-session.log`.
+   - Capture a pane log to share a Codex conversation: `tmux capture-pane -pS -500 > references/tmux-session.log` (host path: `./src/references/tmux-session.log`).
 
 ## What to Observe
 - Multiple Codex instances can operate concurrently on the same mounted files.

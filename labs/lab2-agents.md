@@ -20,7 +20,7 @@ graph TB
     subgraph Docker["Docker Secured Container"]
         subgraph ContainerOS["Container OS"]
             Codex["<img src='../uni-dev.png' width='30' /><br/>Codex CLI"]
-            ContainerFS["Container Filesystem<br/>/usr/src/app/src/code/lab2_agents/"]
+            ContainerFS["Container Filesystem<br/>/usr/src/app/code/lab2_agents/"]
             AgentsFS["AGENTS.md"]
         end
     end
@@ -66,16 +66,16 @@ graph TB
 
 ## Prerequisites
 - Lab 1 completed and container shell open at `/usr/src/app` via `docker compose run codex /bin/bash`.
-- Local `./src` folder is mounted to `/usr/src/app/src` inside the container.
+- Local `./src` folder is mounted to `/usr/src/app` inside the container.
 
 ## Steps
-1. Create a dedicated workspace for this lab (the folder will be visible both inside the container and on your host under `./src/code/lab2_agents`):
+1. Create a dedicated workspace for this lab (inside container: `code/lab2_agents`; on host: `./src/code/lab2_agents`):
    ```bash
-   mkdir -p src/code/lab2_agents
+   mkdir -p code/lab2_agents
    ```
 2. Add an `AGENTS.md` file that describes the style you want Codex to follow:
    ```bash
-   cat <<'EOF' > src/code/lab2_agents/AGENTS.md
+   cat <<'EOF' > code/lab2_agents/AGENTS.md
    # Lab 2 Agent Instructions
    - Prefer Python 3.11 scripts placed in this folder.
    - Include a short module docstring and a `main()` guarded by `if __name__ == "__main__"`.
@@ -85,16 +85,16 @@ graph TB
    ```
 3. Ask Codex to generate a program that honors those instructions:
    ```bash
-   codex "Read src/code/lab2_agents/AGENTS.md. Create src/code/lab2_agents/greeter.py that exposes greet(name: str) -> str and a CLI flag --name (default 'Codex') to print the greeting."
+   codex "Read code/lab2_agents/AGENTS.md. Create code/lab2_agents/greeter.py that exposes greet(name: str) -> str and a CLI flag --name (default 'Codex') to print the greeting."
    ```
 4. Inspect and run the result to confirm the agent guidance took effect:
    ```bash
-   sed -n '1,160p' src/code/lab2_agents/greeter.py
-   python src/code/lab2_agents/greeter.py --name Ada
+   sed -n '1,160p' code/lab2_agents/greeter.py
+   python code/lab2_agents/greeter.py --name Ada
    ```
 5. Experiment: change the `AGENTS.md` rules (for example, ask for type hints everywhere or a different language) and regenerate to see how the output shifts.
 
 ## What to Observe
 - Agent rules apply to the directory tree containing the `AGENTS.md` file.
 - Persistent preferences reduce how much you must repeat in each prompt.
-- Files appear in both the container path (`/usr/src/app/src/code/lab2_agents`) and the host path (`./src/code/lab2_agents`), confirming the mount.
+- Files appear in both the container path (`/usr/src/app/code/lab2_agents`) and the host path (`./src/code/lab2_agents`), confirming the mount.

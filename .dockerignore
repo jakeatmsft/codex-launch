@@ -2,5 +2,6 @@
 
 # Don’t send these to Docker build context
 .env
+local/.env
 .git
 node_modules

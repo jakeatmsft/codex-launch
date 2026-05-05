@@ -5,7 +5,7 @@
   <strong>👤 User:</strong> <em>"Extend this code using the following instructions "</em> + 📄 <strong>AGENTS.md</strong> → <img src="../uni-dev.png" width="50" alt="Codex CLI" style="vertical-align: middle;" /> ← 📁 <strong>Existing Codebase</strong>
 </p>
 
-Use Codex to extend or refactor code that already exists on disk. This lab keeps the context in `src/code` so Codex can read and modify files directly.
+Use Codex to extend or refactor code that already exists on disk. This lab keeps the context in `code/` inside the container (`./src/code` on host) so Codex can read and modify files directly.
 
 ## Architecture & Workflow
 
@@ -21,7 +21,7 @@ graph TB
     subgraph Docker["Docker Secured Container"]
         subgraph ContainerOS["Container OS"]
             Codex["<img src='../uni-dev.png' width='30' /><br/>Codex CLI"]
-            ContainerFS["Container Filesystem<br/>/usr/src/app/src/code/lab3_orders/"]
+            ContainerFS["Container Filesystem<br/>/usr/src/app/code/lab3_orders/"]
             ExistingFS["order_service.py<br/>(existing)"]
         end
     end
@@ -68,14 +68,14 @@ graph TB
 - Have Codex evolve an existing project instead of starting from scratch.
 
 ## Prerequisites
-- Lab 2 completed. Keep `src/code/lab2_agents/AGENTS.md` nearby if you want the same conventions.
-- Container shell open at `/usr/src/app` (`docker compose run codex /bin/bash`) with local `./src` mounted to `/usr/src/app/src`.
+- Lab 2 completed. Keep `code/lab2_agents/AGENTS.md` nearby if you want the same conventions.
+- Container shell open at `/usr/src/app` (`docker compose run codex /bin/bash`) with local `./src` mounted to `/usr/src/app`.
 
 ## Steps (Python Example)
-1. Create a small starter module for Codex to work with (visible on host at `./src/code/lab3_orders` and in the container at `/usr/src/app/src/code/lab3_orders`):
+1. Create a small starter module for Codex to work with (inside container: `code/lab3_orders`; on host: `./src/code/lab3_orders`):
    ```bash
-   mkdir -p src/code/lab3_orders
-   cat <<'EOF' > src/code/lab3_orders/order_service.py
+   mkdir -p code/lab3_orders
+   cat <<'EOF' > code/lab3_orders/order_service.py
    from dataclasses import dataclass
    from typing import Iterable
 
@@ -103,17 +103,17 @@ graph TB
    ```
 2. Ask Codex to read the file and add features (discount codes, CSV export, or tests):
    ```bash
-   codex "Review src/code/lab3_orders/order_service.py. Add support for percentage discounts and a CLI that loads item prices from a JSON file path. Keep the existing structure and update the file in place."
+   codex "Review code/lab3_orders/order_service.py. Add support for percentage discounts and a CLI that loads item prices from a JSON file path. Keep the existing structure and update the file in place."
    ```
 3. Validate and run the updated code:
    ```bash
-   sed -n '1,200p' src/code/lab3_orders/order_service.py
-   python src/code/lab3_orders/order_service.py orders.json   # adjust per Codex output
+   sed -n '1,200p' code/lab3_orders/order_service.py
+   python code/lab3_orders/order_service.py orders.json   # adjust per Codex output
    ```
 4. Ask Codex for focused changes, such as generating unit tests or adding logging, by referencing the specific functions you want touched.
 
 ## Alternative (C#)
-- Replace the starter file with a small C# console app under `src/code/lab3_orders/Program.cs` and prompt Codex to extend it (e.g., add models, services, and tests). The workflow mirrors the Python steps.
+- Replace the starter file with a small C# console app under `code/lab3_orders/Program.cs` and prompt Codex to extend it (e.g., add models, services, and tests). The workflow mirrors the Python steps.
 
 ## What to Observe
 - Codex respects the existing structure and naming when asked to work in place.

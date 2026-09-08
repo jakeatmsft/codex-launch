@@ -16,8 +16,33 @@ load_env_file() {
 }
 
 load_codex_local_env() {
+  local -a explicit_names=()
+  local -a explicit_values=()
+  local name index
+
+  # Explicit command-line environment values take precedence over both files.
+  for name in \
+    AZURE_OPENAI_DOMAIN \
+    AZURE_OPENAI_ENDPOINT \
+    AZURE_OPENAI_DEPLOYMENT_NAME \
+    AZURE_OPENAI_API_VERSION \
+    AZURE_OPENAI_TOKEN_RESOURCE \
+    CODEX_MODEL_REASONING_EFFORT \
+    CODEX_AZURE_AUTH_COMMAND \
+    CODEX_AZURE_AUTH_REFRESH_INTERVAL_MS \
+    CODEX_AZURE_AUTH_TIMEOUT_MS; do
+    if [[ -v "${name}" ]]; then
+      explicit_names+=("${name}")
+      explicit_values+=("${!name}")
+    fi
+  done
+
   load_env_file "${CODEX_LOCAL_REPO_ROOT}/.env"
   load_env_file "${CODEX_LOCAL_DIR}/.env"
+
+  for ((index = 0; index < ${#explicit_names[@]}; index++)); do
+    export "${explicit_names[index]}=${explicit_values[index]}"
+  done
 }
 
 default_codex_home() {

@@ -7,6 +7,7 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/_common.sh"
 load_codex_local_env
 
 domain="${AZURE_OPENAI_DOMAIN:-RESOURCE-NAME.openai.azure.com}"
+hosts_file="${HOSTS_FILE:-/etc/hosts}"
 
 if [ -z "${domain}" ]; then
   echo "AZURE_OPENAI_DOMAIN is empty. Set it in local/.env or .env." >&2
@@ -41,10 +42,14 @@ awk -v d="${domain}" '
     print
   }
 }
-' /etc/hosts > "${hosts_tmp}"
+' "${hosts_file}" > "${hosts_tmp}"
 
 echo "${ip} ${domain}" >> "${hosts_tmp}"
-sudo cp "${hosts_tmp}" /etc/hosts
+if [ -w "${hosts_file}" ]; then
+  cp "${hosts_tmp}" "${hosts_file}"
+else
+  sudo cp "${hosts_tmp}" "${hosts_file}"
+fi
 rm -f "${hosts_tmp}"
 
-echo "Updated /etc/hosts with ${ip} ${domain}"
+echo "Updated ${hosts_file} with ${ip} ${domain}"

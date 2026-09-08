@@ -38,6 +38,7 @@ model_reasoning_effort = "${reasoning_effort}"
 
 [model_providers.azure.auth]
 command = "${auth_command}"
+# Refresh the Azure CLI token every five minutes.
 refresh_interval_ms = ${auth_refresh_interval_ms}
 timeout_ms = ${auth_timeout_ms}
 

@@ -40,14 +40,18 @@ RUN npm install -g @openai/codex
 RUN printf '#!/usr/bin/env bash\nexec /bin/bash "$@"\n' > /usr/local/bin/codex-shell \
   && chmod +x /usr/local/bin/codex-shell
 
-# Extracted shell/runtime setup for containerized Codex.
-COPY local/docker/codex-bashrc.sh /tmp/codex-bashrc.sh
-RUN cat /tmp/codex-bashrc.sh >> /root/.bashrc \
-  && rm /tmp/codex-bashrc.sh
+# Use the same command-backed Azure token refresh as the local setup.
+COPY local/scripts/fetch-azure-openai-token.sh /usr/local/bin/fetch-azure-openai-token.sh
+COPY scripts/docker-entrypoint.sh /usr/local/bin/codex-launch-entrypoint
+RUN chmod 755 \
+    /usr/local/bin/fetch-azure-openai-token.sh \
+    /usr/local/bin/codex-launch-entrypoint
 
 # Set working dir inside container
 WORKDIR /usr/src/app
 
 
-# Default to bash for interactive use
+# Generate the Codex provider config from runtime environment values, then
+# default to an interactive shell.
+ENTRYPOINT ["/usr/local/bin/codex-launch-entrypoint"]
 CMD ["bash"]

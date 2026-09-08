@@ -22,11 +22,9 @@ load_codex_local_env() {
 
   # Explicit command-line environment values take precedence over both files.
   for name in \
-    AZURE_OPENAI_DOMAIN \
-    AZURE_OPENAI_ENDPOINT \
-    AZURE_OPENAI_DEPLOYMENT_NAME \
-    AZURE_OPENAI_API_VERSION \
-    AZURE_OPENAI_TOKEN_RESOURCE \
+    AZURE_AI_PROJECT_ENDPOINT \
+    AZURE_AI_TOKEN_SCOPE \
+    AZURE_OPENAI_MODEL \
     CODEX_MODEL_REASONING_EFFORT \
     CODEX_AZURE_AUTH_COMMAND \
     CODEX_AZURE_AUTH_REFRESH_INTERVAL_MS \
@@ -53,16 +51,22 @@ default_azure_config_dir() {
   printf '%s\n' "${AZURE_CONFIG_DIR:-$HOME/.azure-for-codex}"
 }
 
-normalize_azure_openai_endpoint() {
-  local domain endpoint
-  domain="${AZURE_OPENAI_DOMAIN:-RESOURCE-NAME.openai.azure.com}"
-  endpoint="${AZURE_OPENAI_ENDPOINT:-https://${domain}}"
+normalize_foundry_project_endpoint() {
+  local endpoint
+  endpoint="${AZURE_AI_PROJECT_ENDPOINT:-}"
 
-  if [[ "${endpoint}" != http://* && "${endpoint}" != https://* ]]; then
+  if [ -n "${endpoint}" ] && [[ "${endpoint}" != http://* && "${endpoint}" != https://* ]]; then
     endpoint="https://${endpoint}"
   fi
 
   printf '%s\n' "${endpoint%/}"
+}
+
+foundry_endpoint_domain() {
+  local endpoint domain
+  endpoint="$(normalize_foundry_project_endpoint)"
+  domain="${endpoint#*://}"
+  printf '%s\n' "${domain%%/*}"
 }
 
 install_codex_auth_helper() {

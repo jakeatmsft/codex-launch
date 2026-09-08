@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-RESOURCE="${AZURE_OPENAI_TOKEN_RESOURCE:-https://cognitiveservices.azure.com/}"
+TOKEN_SCOPE="${AZURE_AI_TOKEN_SCOPE:-https://ai.azure.com/.default}"
 AZURE_CONFIG_DIR="${AZURE_CONFIG_DIR:-$HOME/.azure-for-docker}"
 TOKEN_FILE="${AZURE_OPENAI_TOKEN_FILE:-$AZURE_CONFIG_DIR/aoai-access-token}"
 
@@ -17,8 +17,8 @@ if [ ! -d "${AZURE_CONFIG_DIR}" ]; then
   exit 1
 fi
 
-token="$(AZURE_CONFIG_DIR="${AZURE_CONFIG_DIR}" az account get-access-token --resource "${RESOURCE}" --query accessToken -o tsv)"
-expires_on="$(AZURE_CONFIG_DIR="${AZURE_CONFIG_DIR}" az account get-access-token --resource "${RESOURCE}" --query expiresOn -o tsv)"
+token="$(AZURE_CONFIG_DIR="${AZURE_CONFIG_DIR}" az account get-access-token --scope "${TOKEN_SCOPE}" --query accessToken -o tsv)"
+expires_on="$(AZURE_CONFIG_DIR="${AZURE_CONFIG_DIR}" az account get-access-token --scope "${TOKEN_SCOPE}" --query expiresOn -o tsv)"
 
 if [ -z "${token}" ]; then
   echo "Failed to retrieve access token from Azure CLI." >&2

@@ -6,11 +6,11 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/_common.sh"
 
 load_codex_local_env
 
-domain="${AZURE_OPENAI_DOMAIN:-RESOURCE-NAME.openai.azure.com}"
+domain="$(foundry_endpoint_domain)"
 hosts_file="${HOSTS_FILE:-/etc/hosts}"
 
 if [ -z "${domain}" ]; then
-  echo "AZURE_OPENAI_DOMAIN is empty. Set it in local/.env or .env." >&2
+  echo "Could not determine a host from AZURE_AI_PROJECT_ENDPOINT." >&2
   exit 1
 fi
 

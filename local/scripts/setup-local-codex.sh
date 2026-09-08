@@ -8,16 +8,15 @@ source "${SCRIPT_DIR}/_common.sh"
 
 load_codex_local_env
 
-domain="${AZURE_OPENAI_DOMAIN:-}"
-deployment="${AZURE_OPENAI_DEPLOYMENT_NAME:-}"
+project_endpoint="$(normalize_foundry_project_endpoint)"
 
-if [ -z "${domain}" ] || [[ "${domain}" == *RESOURCE-NAME* ]]; then
-  echo "Set AZURE_OPENAI_DOMAIN to your Azure OpenAI host name." >&2
+if [ -z "${project_endpoint}" ] || [[ "${project_endpoint}" == *RESOURCE-NAME* ]] || [[ "${project_endpoint}" == *PROJECT-NAME* ]]; then
+  echo "Set AZURE_AI_PROJECT_ENDPOINT to your Microsoft Foundry project endpoint." >&2
   exit 1
 fi
 
-if [ -z "${deployment}" ] || [ "${deployment}" = "your_deployment_name_here" ]; then
-  echo "Set AZURE_OPENAI_DEPLOYMENT_NAME to your Azure deployment name." >&2
+if [[ "${project_endpoint}" != */api/projects/* ]]; then
+  echo "AZURE_AI_PROJECT_ENDPOINT must include /api/projects/PROJECT-NAME." >&2
   exit 1
 fi
 

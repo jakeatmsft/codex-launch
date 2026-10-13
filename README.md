@@ -8,20 +8,20 @@ Run the OpenAI Codex CLI against Azure OpenAI with Microsoft Entra authenticatio
 
 ## Choose a workflow
 
-1. **Local (recommended):** install and configure Codex on the host with one setup command.
-2. **Docker:** keep Codex isolated and mount `./src` as its workspace.
+1. 💻 **Local (recommended):** install and configure Codex on the host with one setup command.
+2. 🐳 **Docker:** keep Codex isolated and mount `./src` as its workspace.
 
-> **Microsoft Entra-managed machines:** Use the local workflow. Device authentication policies may prevent Azure CLI authentication from working correctly inside Docker.
+> 🔐 **Microsoft Entra-managed machines:** Use the local workflow. Device authentication policies may prevent Azure CLI authentication from working correctly inside Docker.
 
 Both workflows now use Codex's command-backed provider authentication. Codex calls Azure CLI for a bearer token, refreshes it every five minutes, and never stores the token in this repository.
 
 ## Prerequisites
 
-- [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) installed on the host.
-- An Azure AI Foundry project with a deployed model.
-- WSL is recommended on Windows for path and shell compatibility.
-- Local workflow: Node.js, npm, and `sudo` access.
-- Docker workflow: Docker Desktop with Compose.
+- ☁️ [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) installed on the host.
+- 🤖 An Azure AI Foundry project with a deployed model.
+- 🐧 WSL is recommended on Windows for path and shell compatibility.
+- 💻 Local workflow: Node.js, npm, and `sudo` access.
+- 🐳 Docker workflow: Docker Desktop with Compose.
 
 Deploy a coding-capable model in [Azure AI Foundry](https://ai.azure.com), then copy its endpoint host and deployment name.
 
@@ -37,11 +37,11 @@ AZURE_OPENAI_DEPLOYMENT_NAME=your_deployment_name_here \
 
 The setup command:
 
-- installs `@openai/codex` when it is not already available;
-- reuses `~/.azure` or starts `az login` for `~/.azure-for-codex`;
-- installs the Azure token helper under `~/.codex/bin`;
-- writes the Azure provider and automatic token-refresh settings to `~/.codex/config.toml`;
-- updates the managed shell block and the Azure endpoint entry in `/etc/hosts`.
+- 📥 installs `@openai/codex` when it is not already available;
+- 🔑 reuses `~/.azure` or starts `az login` for `~/.azure-for-codex`;
+- 🛠️ installs the Azure token helper under `~/.codex/bin`;
+- ⚙️ writes the Azure provider and automatic token-refresh settings to `~/.codex/config.toml`;
+- 🌐 updates the managed shell block and the Azure endpoint entry in `/etc/hosts`.
 
 Then start Codex:
 
@@ -96,10 +96,10 @@ Skip an image rebuild with `--no-build`. To keep settings in a file, copy [`.env
 
 ## What this repo includes
 
-- A local installer for Codex, Azure provider configuration, shell setup, and host-name synchronization.
-- A Docker image with `@openai/codex`, Azure CLI, Python, and .NET 8.
-- The same Azure CLI-backed token helper and refresh interval in both workflows.
-- Guided exercises under [`labs/`](labs/README.md).
+- 📦 A local installer for Codex, Azure provider configuration, shell setup, and host-name synchronization.
+- 🐳 A Docker image with `@openai/codex`, Azure CLI, Python, and .NET 8.
+- 🔄 The same Azure CLI-backed token helper and refresh interval in both workflows.
+- 🧪 Guided exercises under [`labs/`](labs/README.md).
 
 ## Project structure
 
